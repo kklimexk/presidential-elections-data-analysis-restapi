@@ -1,0 +1,13 @@
+# Routes
+# This file defines all application routes (Higher priority routes first)
+# ~~~~
+
+# An example controller showing how to use dependency injection
+GET     /count                      controllers.examples.CountController.count
+# An example controller showing how to write asynchronous code
+GET     /message                    controllers.examples.AsyncController.message
+
+GET     /users                      controllers.UserController.findAll
+
+# Map static resources from the /public folder to the /assets URL path
+GET     /assets/*file               controllers.Assets.versioned(path="/public", file: Asset)
