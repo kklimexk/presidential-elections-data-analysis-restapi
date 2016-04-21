@@ -66,6 +66,6 @@ object TweetFormats {
       (JsPath \ "userId").write[Long]
     )(unlift(Tweet.unapply))
 
-  implicit val userFormat: Format[Tweet] =
+  implicit val tweetFormat: Format[Tweet] =
     Format(tweetReads, tweetWrites)
 }
