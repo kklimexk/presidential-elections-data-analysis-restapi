@@ -13,24 +13,24 @@ import scala.concurrent.Future
 import scala.concurrent.ExecutionContext.Implicits.global
 
 @Singleton
-class UserController @Inject() (val reactiveMongoApi: ReactiveMongoApi)
+class TweetController @Inject() (val reactiveMongoApi: ReactiveMongoApi)
   extends Controller with MongoController with ReactiveMongoComponents {
 
-  def collection: JSONCollection = reactiveMongoApi.db.collection[JSONCollection]("users")
+  def collection: JSONCollection = reactiveMongoApi.db.collection[JSONCollection]("tweets")
 
   import models._
-  import models.UserFormats._
+  import models.TweetFormats._
 
   def findAll = Action.async {
-    val cursor: Cursor[User] = collection.find(Json.obj()).cursor[User]()
+    val cursor: Cursor[Tweet] = collection.find(Json.obj()).cursor[Tweet]()
 
-    val futureUsersList: Future[List[User]] = cursor.collect[List]()
+    val futureTweetsList: Future[List[Tweet]] = cursor.collect[List]()
 
-    val futureUsersJsonArray: Future[JsValue] = futureUsersList.map { users =>
-      Json.toJson(users)
+    val futureTweetsJsonArray: Future[JsValue] = futureTweetsList.map { tweets =>
+      Json.toJson(tweets)
     }
-    futureUsersJsonArray.map { users =>
-      Ok(users)
+    futureTweetsJsonArray.map { tweets =>
+      Ok(tweets)
     }
   }
 

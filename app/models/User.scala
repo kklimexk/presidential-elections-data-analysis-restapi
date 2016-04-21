@@ -19,13 +19,7 @@ object UserFormats {
 
   import play.api.libs.json._
   import play.api.libs.functional.syntax._
-
-  implicit val dateTimeRead: Reads[DateTime] =
-    (JsPath \ "$date").read[Long].map { dateTime => new DateTime(dateTime) }
-
-  implicit val dateTimeWrite: Writes[DateTime] = new Writes[DateTime] {
-    def writes(dateTime: DateTime): JsValue = JsString(dateTime.toString)
-  }
+  import DateTimeFormats._
 
   val userReads: Reads[User] = (
         (JsPath \ "crawledDate").read[DateTime] and
